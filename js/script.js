@@ -9,9 +9,11 @@ window.onload = function () {
   gnb.mouseenter(function(){
     header.css('height', gnbH);
   });
+
   gnb.mouseleave(function(){
     header.css('height', 70);
   });
+
 	// 비주얼 슬라이드
 	new Swiper('.sw-visual', {
 		slidesPerView: 8,
