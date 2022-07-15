@@ -459,8 +459,7 @@ body {
 
 
 .about-box {
-  position: relative;
-  display: block;
+
   height: 475px;
   width: 32.5%;
   margin-right: 1.25%;
@@ -468,7 +467,6 @@ body {
 }
 
 .about-box-h3 {
-  position: relative;
   font-size: 26px;
   line-height: 1.46;
   color: #222222;
@@ -489,9 +487,9 @@ body {
 
 .about-box-txt {
   position: relative;
-  display: block;
   font-size: 16px;
   color: #222;
+  z-index: 1;
 }
 
 .about-box-w {
@@ -541,7 +539,6 @@ body {
 .about-box-left {
   position: relative;
   display: block;
-  width: 455px;
 }
 
 .about-box-center {
@@ -557,7 +554,6 @@ body {
 
 .about-box-round {
   position: relative;
-  display: block;
   border-radius: 20px 0px 20px 0px;
   overflow: hidden;
   box-shadow: 2px 2px 15px rgb(63 68 138 / 15%);
@@ -583,14 +579,12 @@ body {
 }
 
 .about-box-ceo a {
-  position: relative;
   display: block;
   width: 100%;
   height: 100%;
 
   background: url('../images/ceo.png') no-repeat center;
   background-size: cover;
-  color: #fff;
 
 }
 
@@ -656,10 +650,9 @@ body {
   position: absolute;
   left: 0;
   bottom: 0;
-  display: block;
   width: 100%;
   background-color: #18263b;
-  z-index: 9999;
+  z-index: 9;
 }
 
 .sw-about-title {
@@ -967,7 +960,7 @@ body {
   height: 100%;
   width: 48.57%;
   border: 2px solid #fff;
-  padding: 30px 20px;
+  padding: 20px 30px;
 }
 
 
