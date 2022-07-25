@@ -1,4 +1,40 @@
-$(document).ready(function () {});
+$(document).ready(function () {
+  
+  let swSid = new Swiper('.sw-sid', {
+    loop: true,
+    pagination: {
+      el: '.sw-sid-pg',
+      type: 'fraction',
+    },
+    navigation:{
+      prevEl: '.sw-sid-prev',
+      nextEl: '.sw-sid-next'
+    },
+    autoplay:{
+      delay: 1000,
+      speed: 500,
+      disableOnInteraction:false,
+    }
+  })
+
+  // 자동실행 멈춤/재생
+  let swSidPause = $('.sw-sid-pause');
+  swSidPause.click(function(){
+    //현재 sw-sid-play 클래스 적용중인가용? 
+    //true, false 값을 돌려줄 꺼임 
+    let temp = $(this).hasClass('sw-sid-play');
+    if(temp == false){
+      $(this).addClass('sw-sid-play');
+      swSid.autoplay.stop();
+    } else {
+      $(this).removeClass('sw-sid-play');
+      swSid.autoplay.start();
+
+    }
+  });
+
+});
+
 window.onload = function () {
   // 랜덤 천사 기능(0~2)
   let rNum = Math.floor( Math.random() * 3 );
