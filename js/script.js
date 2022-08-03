@@ -192,9 +192,10 @@ window.onload = function () {
       delay: 1000,
       disableOnInteraction: false,
     },
+    // display 변경시 처리
     observer: true,
-    observeParents: true
-    });
+    observeParents: true,
+  });
 
   // 자동 실행 멈춤/재생
   let swSidPause = $('.sw-sid-pause');
@@ -218,66 +219,131 @@ window.onload = function () {
     }
 
   });
-  // 뉴스 탭 메뉴
+
+  // 뉴스 Top 영역 슬라이드
+  // 슬라이드 옵션
+  let swNewsListOpt = {
+    loop: true,
+    slidesPerView: 2,
+    spaceBetween: 12,
+    breakpoints : {
+      700: {
+        slidesPerView: 3, 
+      },  
+      900: {
+        slidesPerView: 4, 
+      }  
+    },
+    navigation : {
+      prevEl: '.sw-news-list-prev',
+      nextEl: '.sw-news-list-next'
+    }
+  };
+  // 슬라이드 저장
+  let swNewsList;
+  // = new Swiper('.sw-news-list', swNewsListOpt);  
+  // 화면이 작아질때, 즉, 1000px 보다 작을 때 슬라이드 생성되어야 함.
+  // 만약 1000px 보다 크면 슬라이드는 제거가 되어야 한다.
+  $(window).resize(function(){
+
+    // jQuery 는 scroll 빼고 너비잡는다.
+    // javaScript window.innerWidth
+    let wW = window.innerWidth;
+   
+    if(wW <= 1000) {
+      // 슬라이드 생성
+      if(swNewsList == undefined) {
+        swNewsList = new Swiper('.sw-news-list', swNewsListOpt );
+      }      
+    }else{
+      // 슬라이드 제거
+      if(swNewsList != undefined) {
+        swNewsList.destroy();
+        swNewsList = undefined;
+      }
+    }
+
+  });
+
+  // 최초 진입 및 새로 고침 시에도 체크
+  let wW = window.innerWidth;   
+  if(wW <= 1000) {
+    if(swNewsList == undefined) {
+      swNewsList = new Swiper('.sw-news-list', swNewsListOpt );
+    }      
+  }else{
+    if(swNewsList != undefined) {
+      swNewsList.destroy();
+      swNewsList = undefined;
+    }
+  }
+
+
+  // 뉴스 탭메뉴
   // 탭 메뉴 저장
   let newsBottomMenu = $('.news-bottom-menu > a');
   // 탭의 내용
-  // html 의 태그 구조의 문제 발생.
-  let newsBottomContent = [
+  // html 의 태그 구조의 문제가 발생합니다.
+  let newsBottomCont = [
+    // $('.news-box-bot').eq(0),
     $('.news-box-bot').eq(1),
     $('.news-box-bot').eq(2),
     $('.news-box-bot').eq(3)
   ];
+
   // 활성화될 번호 기억
   let newsBottomIdx = 0;
-  // newsBottomContent[0].hide()
-  // newsBottomContent[1].hide()
-  // newsBottomContent[2].hide()
-  // newsBottomContent[newsBottomIdx].show();
-  // newsBottomMenu.removeClass('new-bottom-menu-active')
-  // newsBottomMenu.eq(newsBottomIdx).addClass('new-bottom-menu-active')
+  // newsBottomCont[0].hide();
+  // newsBottomCont[1].hide();
+  // newsBottomCont[2].hide();
+  // newsBottomCont[newsBottomIdx].show();
+  // newsBottomMenu.removeClass('news-bottom-menu-active');
+  // newsBottomMenu.eq(newsBottomIdx).addClass('news-bottom-menu-active');
+  
 
-  // tab menu click 시 내용 보여주기
-
+  // 탭 메뉴 클릭시 내용 보여주기
   $.each(newsBottomMenu, function(index, item){
     $(this).click(function(event){
+      // href 막기
       event.preventDefault();
-      // focus 이동
+
       newsBottomMenu.removeClass('news-bottom-menu-active');
       $(this).addClass('news-bottom-menu-active');
 
+      newsBottomCont[0].hide();
+      newsBottomCont[1].hide();
+      newsBottomCont[2].hide();
+      newsBottomCont[index].show();
 
-      newsBottomContent[0].hide();
-      newsBottomContent[1].hide();
-      newsBottomContent[2].hide();
-      newsBottomContent[index].show();
-    })
-  })
+    });
+  });
 
+  // 화면 리사이징시 jquery css 제거
   $(window).resize(function(){
+    
     // 화면 너비
-    let vW = $(window).width();
-    if(vW > 630){
-      newsBottomContent[0].removeAttr('style');
-      newsBottomContent[1].removeAttr('style');
-      newsBottomContent[2].removeAttr('style');
-    } else {
-      
-      $.each(newsBottomMenu, function(index, item){
+    let wW = $(window).width();
+    if(wW > 630) {
+      newsBottomCont[0].removeAttr('style');
+      newsBottomCont[1].removeAttr('style');
+      newsBottomCont[2].removeAttr('style');
+    }else{
 
-        // 화면 리사이즈 마다 물어본다.
+      $.each(newsBottomMenu, function(index, itme){
+
+        // 화면 리사이즈 마다 물어본다. 
         let temp = $(this).hasClass('news-bottom-menu-active');
-        if(temp){
-          newsBottomContent[0].hide();
-          newsBottomContent[1].hide();
-          newsBottomContent[2].hide();
-          newsBottomContent[index].show();
+        if(temp) {          
+          newsBottomCont[0].hide();
+          newsBottomCont[1].hide();
+          newsBottomCont[2].hide();
+          newsBottomCont[index].show();
         }
 
-      })
-
+      });
     }
-  })
+
+  });
 
 
 
