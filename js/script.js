@@ -1,5 +1,27 @@
 $(document).ready(function () {
-
+    // 모달창
+    let modalWrap = $('.modal-wrap');
+    let modalClose = $('.modal-close');
+    
+  
+    modalClose.click(function(){
+      modalWrap.stop().fadeOut(500)
+      // 추가기능 : 스크롤바 살리기
+      // $('html').css('overflow', 'auto');
+    });
+    let modalMain = $('.modal-main')
+    //내용 배경 클릭
+    modalMain.click(function(event){
+      // 클릭 정보 전달 막기
+      event.stopPropagation();
+    });
+    //전체 배경 클릭
+    modalWrap.click(function(){
+      modalWrap.stop().fadeOut(500);
+      // 추가기능 : 스크롤바 살리기
+      // $('html').css('overflow', 'auto');
+    });
+    
   // 모바일 메뉴
   let mobileMenu = $('.mobile-menu');
   let mobileBt = $('.all-menu');
@@ -12,8 +34,8 @@ $(document).ready(function () {
     }
 
     mMainMenu.removeClass('m-mainmenu-active');
-    mSubMenu.stop().hide();
-    mDepth3.stop().hide();
+    mSubMenu.hide();
+    mDepth3.hide();
 
     mobileMenu.toggleClass('mobile-menu-active');
     // 모바일 메뉴가 펼쳐졌는지 아닌지를 판단(true/false);
@@ -27,55 +49,61 @@ $(document).ready(function () {
     }
 
   });
-  // 모바일 메뉴 depth1
+
+  // 모바일 메뉴 Depth1
   let mMenu = $('.m-menu');
   let mMenuLi = $('.m-menu > li');
+  // 주메뉴
   let mMainMenu = $('.m-mainmenu');
+  // 서브메뉴 Depth2
   let mSubMenu = $('.m-submenu');
+  // 서브메뉴 Depth3
   let mDepth3 = $('.m-depth3');
 
+  $.each(mMenuLi, function (index, item) {
 
-  $.each(mMenuLi, function(index, item){
-    
     let depth1 = $(this).find('.m-mainmenu');
-    depth1.click(function(e){
-      e.preventDefault();
+    depth1.click(function (event) {
+      event.preventDefault();
       // 현재 포커스가 있는지 없는지 파악
-      let temp=$(this).hasClass('m-mainmenu-active');
+      let temp = $(this).hasClass('m-mainmenu-active');
 
-      if(temp){
-        // temp 가 true 가 나온 상황, 메뉴 오픈된 상태
+      if (temp) {
+        // temp 는 true 가 나온 상황이 메뉴 오픈 된 상태
         // 닫힌 상태로 바꾸어주어야 한다.
         $(this).removeClass('m-mainmenu-active');
         // 서브메뉴를 닫아준다.
         $(this).next().stop().slideUp();
+
       } else {
-        // 일단 모든 메뉴를 닫는다
+        // 일단 모든 메뉴를 닫고 
         mMainMenu.removeClass('m-mainmenu-active');
         // 클릭된 메뉴만 펼친다.
         $(this).addClass('m-mainmenu-active');
-        // 일단 모든 submenu 닫자
-        mSubMenu.stop().slideUp()
-        // 하나는 열자
-        $(this).next().stop().slideDown()
+        // 일단 모든 서브메뉴를 닫아라.
+        mSubMenu.stop().slideUp();
+        // 하나는 열어라
+        $(this).next().stop().slideDown();
       }
-
       // 3Depth 는 무조건 닫는다.
       mDepth3.stop().slideUp();
-    })
 
+    });
   });
-  
-  $.each(mSubMenu, function(index, item){
-    let mSubMenuA = $(this).find('>li >a');
-    mSubMenuA.click(function(event){
+
+  $.each(mSubMenu, function (index, item) {
+    let mSubMenuA = $(this).find('> li > a');
+
+    mSubMenuA.click(function (event) {
       // depth3 가 있는지 검사
       let depth3 = $(this).next();
-      if(depth3.length){
-        event.preventDefault()
+
+      if (depth3.length) {
+        // href 있다면.. 막는다.
+        event.preventDefault();
+
         let tempShow = depth3.css('display');
-        // console.log(tempShow)
-        if(tempShow == 'none'){
+        if (tempShow == 'none') {
           // 안보이고 있던 상태라면
           // 보이게 해준다.
           // 일단 모두 숨긴다.
@@ -86,9 +114,11 @@ $(document).ready(function () {
           // 가려준다.
           depth3.stop().slideUp();
         }
+
       }
 
-    })
+    });
+
   });
 
 
@@ -348,7 +378,7 @@ window.onload = function () {
   });
 
   // 비주얼 슬라이드
-  new Swiper('.sw-visual', {
+  let swVisualPc = new Swiper('.sw-visual', {
     slidesPerView: 3,
     grid: {
       rows: 2,
@@ -396,6 +426,16 @@ window.onload = function () {
         },
       },
     },
+  });
+  let swVisualMb = new Swiper('.sw-visual-mb', {
+    resistance: true,
+    resistanceRatio: 0
+  });
+
+  // 초기 애니메이션 아이콘 숨기기
+  $('.visual-mb').click(function (event) {
+    event.stopPropagation();
+    $('.visual-mb-ani').fadeOut();
   });
 
   // about 슬라이드
