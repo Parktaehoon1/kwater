@@ -1,27 +1,28 @@
 $(document).ready(function () {
-    // 모달창
-    let modalWrap = $('.modal-wrap');
-    let modalClose = $('.modal-close');
-    
-  
-    modalClose.click(function(){
-      modalWrap.stop().fadeOut(500)
-      // 추가기능 : 스크롤바 살리기
-      // $('html').css('overflow', 'auto');
-    });
-    let modalMain = $('.modal-main')
-    //내용 배경 클릭
-    modalMain.click(function(event){
-      // 클릭 정보 전달 막기
-      event.stopPropagation();
-    });
-    //전체 배경 클릭
-    modalWrap.click(function(){
-      modalWrap.stop().fadeOut(500);
-      // 추가기능 : 스크롤바 살리기
-      // $('html').css('overflow', 'auto');
-    });
-    
+  // 모달창
+  let modalWrap = $('.modal-wrap');
+  let modalClose = $('.modal-close');
+
+
+  modalClose.click(function () {
+    modalWrap.stop().fadeOut(500)
+    // 추가기능 : 스크롤바 살리기
+    // $('html').css('overflow', 'auto');
+  });
+  let modalMain = $('.modal-main')
+  //내용 배경 클릭
+  modalMain.click(function (event) {
+    // 클릭 정보 전달 막기
+    event.stopPropagation();
+  });
+  //전체 배경 클릭
+  modalWrap.click(function () {
+    modalWrap.stop().fadeOut(500);
+    // 추가기능 : 스크롤바 살리기
+    // $('html').css('overflow', 'auto');
+  });
+
+
   // 모바일 메뉴
   let mobileMenu = $('.mobile-menu');
   let mobileBt = $('.all-menu');
